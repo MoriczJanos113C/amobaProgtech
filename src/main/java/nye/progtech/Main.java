@@ -1,6 +1,7 @@
 package nye.progtech;
 
 
+import nye.progtech.game.GameEngine;
 import nye.progtech.io.BoardFileReader;
 import nye.progtech.io.BoardFileWriter;
 import nye.progtech.model.*;
@@ -26,7 +27,8 @@ public class Main {
         Player human = new Player(name, PlayerType.HUMAN, CellState.X);
         Player computer = new Player("Computer", PlayerType.COMPUTER, CellState.O);
 
-
+        GameEngine game = new GameEngine(board, human, computer);
+        game.play();
 
         // Save final state
         saveBoard(board);
@@ -52,3 +54,4 @@ public class Main {
         }
     }
 }
+
