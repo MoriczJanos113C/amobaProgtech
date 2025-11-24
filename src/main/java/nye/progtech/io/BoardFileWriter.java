@@ -8,11 +8,27 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Utility class for saving a Board object to a file.
+ */
 public final class BoardFileWriter {
 
-    private BoardFileWriter() {}
+    /** Private constructor to prevent instantiation. */
+    private BoardFileWriter() {
+        // Utility class
+    }
 
-    public static void save(Board board, Path path) throws IOException {
+    /**
+     * Saves the given board to the specified path.
+     *
+     * @param board the board to save
+     * @param path  the file path to save the board to
+     * @throws IOException if writing fails
+     */
+    public static void save(
+            final Board board,
+            final Path path)
+            throws IOException {
         if (board == null) {
             throw new IllegalArgumentException("Board cannot be null.");
         }
@@ -20,12 +36,12 @@ public final class BoardFileWriter {
             throw new IllegalArgumentException("Path cannot be null.");
         }
 
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
 
         for (int r = 0; r < board.getRows(); r++) {
             for (int c = 0; c < board.getCols(); c++) {
-                CellState state = board.getCell(new Position(r, c));
-                char ch = switch (state) {
+                final CellState state = board.getCell(new Position(r, c));
+                final char ch = switch (state) {
                     case X -> 'X';
                     case O -> 'O';
                     case EMPTY -> '.';
@@ -39,6 +55,7 @@ public final class BoardFileWriter {
         if (path.getParent() != null) {
             Files.createDirectories(path.getParent());
         }
+
         Files.writeString(path, sb.toString());
     }
 }
