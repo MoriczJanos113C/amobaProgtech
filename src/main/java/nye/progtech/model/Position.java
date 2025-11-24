@@ -9,11 +9,15 @@ public final class Position {
 
     /** Row index of the position. */
     private final int row;
+
     /** Column index of the position. */
     private final int col;
 
     /**
-     * Creates a new position on the board.
+     * Creates a new immutable position on the board.
+     *
+     * @param rowIndex the row index of the position (must be non-negative)
+     * @param colIndex the column index of the position (must be non-negative)
      */
     public Position(final int rowIndex, final int colIndex) {
         if (rowIndex < 0 || colIndex < 0) {
@@ -27,6 +31,8 @@ public final class Position {
 
     /**
      * Returns the row index of this position.
+     *
+     * @return the row index
      */
     public int row() {
         return row;
@@ -34,6 +40,8 @@ public final class Position {
 
     /**
      * Returns the column index of this position.
+     *
+     * @return the column index
      */
     public int col() {
         return col;
