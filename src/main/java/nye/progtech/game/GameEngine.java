@@ -1,5 +1,6 @@
 package nye.progtech.game;
 
+import nye.progtech.db.PlayerStatsRepository;
 import nye.progtech.model.Board;
 import nye.progtech.model.Player;
 import nye.progtech.model.Position;
@@ -12,11 +13,13 @@ public final class GameEngine {
     private final Player human;
     private final Player computer;
     private final Random random = new Random();
+    private final PlayerStatsRepository statsRepo;
 
-    public GameEngine(Board board, Player human, Player computer) {
+    public GameEngine(Board board, Player human, Player computer, PlayerStatsRepository statsRepo) {
         this.board = Objects.requireNonNull(board);
         this.human = Objects.requireNonNull(human);
         this.computer = Objects.requireNonNull(computer);
+        this.statsRepo = Objects.requireNonNull(statsRepo);
     }
 
     public void play() {
@@ -57,6 +60,12 @@ public final class GameEngine {
             System.out.println("You placed at " + input.toUpperCase() + ".");
             System.out.println(board);
 
+            if (human.hasWon(board, move)) {
+                System.out.println("You won!");
+                statsRepo.incrementWin(human.getName());
+                break;
+            }
+
             Position aiMove = generateRandomMove();
             if (aiMove == null) {
                 System.out.println("No more free spaces — game over.");
@@ -66,6 +75,12 @@ public final class GameEngine {
             board.setCell(aiMove, computer.getStone());
             System.out.println("Computer moved to " + toNotation(aiMove) + ".");
             System.out.println(board);
+
+            if (computer.hasWon(board, aiMove)) {
+                System.out.println("Computer wins!");
+                statsRepo.incrementWin(computer.getName());
+                break;
+            }
         }
     }
 
