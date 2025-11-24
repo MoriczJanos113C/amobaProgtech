@@ -1,5 +1,6 @@
 package nye.progtech.model;
 
+
 import java.util.Objects;
 
 /**
